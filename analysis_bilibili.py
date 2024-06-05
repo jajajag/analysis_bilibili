@@ -232,9 +232,13 @@ async def video_detail(url: str, session: ClientSession, **kwargs):
         desc_list = desc.split("\n")
         if len(desc_list) > 4:
             desc = desc_list[0] + "\n" + desc_list[1] + "\n" + desc_list[2] + "……"
+        mstext = MessageSegment.text("".join([vurl, title, tname, stat, desc]))
+        # JAG: Change content of video details
+        title = f"\n标题：{res['title']}\n"
         up = f"UP：{res['owner']['name']}\n"
-        #mstext = MessageSegment.text("".join([vurl, title, tname, stat, desc]))
-        mstext = MessageSegment.text("".join([title, up, desc]))
+        desc = f"简介：{res['desc']}"
+        vurl = f"https://www.bilibili.com/video/av{res['aid']}"
+        mstext = MessageSegment.text("".join([title, up, desc, vurl]))
         msg = Message([cover, mstext])
         return msg, vurl
     except Exception as e:
