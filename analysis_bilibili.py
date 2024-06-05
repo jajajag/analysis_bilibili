@@ -232,7 +232,9 @@ async def video_detail(url: str, session: ClientSession, **kwargs):
         desc_list = desc.split("\n")
         if len(desc_list) > 4:
             desc = desc_list[0] + "\n" + desc_list[1] + "\n" + desc_list[2] + "……"
-        mstext = MessageSegment.text("".join([vurl, title, tname, stat, desc]))
+        up = f'UP：{res['owner']['name']}\n'
+        #mstext = MessageSegment.text("".join([vurl, title, tname, stat, desc]))
+        mstext = MessageSegment.text("".join([title, up, desc]))
         msg = Message([cover, mstext])
         return msg, vurl
     except Exception as e:
