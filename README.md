@@ -1,5 +1,7 @@
 # 使用说明
 
+### 自用，只保留`analysis_bilibili`插件
+
 ### 注意更新 Hoshino 本体，以防 CQ 码注入.jpg<br>
 
 ### requirements.txt 是所需第三方模块，使用前需安装模块<br>
