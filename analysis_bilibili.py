@@ -206,7 +206,7 @@ async def video_detail(url: str, session: ClientSession, **kwargs):
         vurl  = f"https://b23.tv/{res['bvid']}"
         title = f"标题：{res['title']}\n"
         up    = f"作者：{res['owner']['name']}\n"
-        desc  = "\n".join(desc.split("\n")[:2])
+        desc  = "\n".join(res['desc'].split("\n")[:2])
         desc  = f"简介：{desc}\n"
         url   = f"链接：{vurl}"
         mstext = MessageSegment.text("".join([title, up, desc, url]))
