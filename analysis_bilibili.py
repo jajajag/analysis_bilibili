@@ -201,43 +201,12 @@ async def video_detail(url: str, session: ClientSession, **kwargs):
             res = (await resp.json()).get("data")
             if not res:
                 return "解析到视频被删了/稿件不可见或审核中/权限不足", url
-        vurl = f"https://www.bilibili.com/video/av{res['aid']}"
-        title = f"\n标题：{res['title']}\n"
-        cover = (
-            MessageSegment.image(res["pic"])
-            if analysis_display_image or "video" in analysis_display_image_list
-            else MessageSegment.text("")
-        )
-        if page := kwargs.get("page"):
-            page = page[0].replace("&amp;", "&")
-            p = int(page[3:])
-            if p <= len(res["pages"]):
-                vurl += f"?p={p}"
-                part = res["pages"][p - 1]["part"]
-                if part != res["title"]:
-                    title += f"小标题：{part}\n"
-        if time_location := kwargs.get("time_location"):
-            time_location = time_location[0].replace("&amp;", "&")[3:]
-            if page:
-                vurl += f"&t={time_location}"
-            else:
-                vurl += f"?t={time_location}"
-        pubdate = strftime("%Y-%m-%d %H:%M:%S", localtime(res["pubdate"]))
-        tname = f"类型：{res['tname']} | UP：{res['owner']['name']} | 日期：{pubdate}\n"
-        stat = f"播放：{handle_num(res['stat']['view'])} | 弹幕：{handle_num(res['stat']['danmaku'])} | 收藏：{handle_num(res['stat']['favorite'])}\n"
-        stat += f"点赞：{handle_num(res['stat']['like'])} | 硬币：{handle_num(res['stat']['coin'])} | 评论：{handle_num(res['stat']['reply'])}\n"
-        desc = f"简介：{res['desc']}"
-        desc_list = desc.split("\n")
-        desc = "".join(i + "\n" for i in desc_list if i)
-        desc_list = desc.split("\n")
-        if len(desc_list) > 4:
-            desc = desc_list[0] + "\n" + desc_list[1] + "\n" + desc_list[2] + "……"
-        mstext = MessageSegment.text("".join([vurl, title, tname, stat, desc]))
-        # JAG: Change content of video details
-        title = f"\n标题：{res['title']}\n"
-        up = f"UP：{res['owner']['name']}\n"
-        desc = f"简介：{res['desc']}"
-        vurl = f"https://www.bilibili.com/video/av{res['aid']}"
+        cover = MessageSegment.image(res["pic"])
+        vurl  = f"https://www.bilibili.com/video/av{res['aid']}"
+        url   = f"链接：{vurl}\n"
+        title = f"标题：{res['title']}\n"
+        up    = f"UP：{res['owner']['name']}\n"
+        desc  = f"简介：{res['desc']}"
         mstext = MessageSegment.text("".join([title, up, desc, vurl]))
         msg = Message([cover, mstext])
         return msg, vurl
