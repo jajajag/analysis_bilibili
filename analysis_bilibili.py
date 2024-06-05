@@ -203,11 +203,11 @@ async def video_detail(url: str, session: ClientSession, **kwargs):
                 return "解析到视频被删了/稿件不可见或审核中/权限不足", url
         cover = MessageSegment.image(res["pic"])
         vurl  = f"https://www.bilibili.com/video/av{res['aid']}"
-        url   = f"链接：{vurl}\n"
         title = f"标题：{res['title']}\n"
-        up    = f"UP：{res['owner']['name']}\n"
-        desc  = f"简介：{res['desc']}"
-        mstext = MessageSegment.text("".join([title, up, desc, vurl]))
+        up    = f"作者：{res['owner']['name']}\n"
+        desc  = f"简介：{res['desc'][:2]}\n"
+        url   = f"链接：{vurl}"
+        mstext = MessageSegment.text("".join([title, up, desc, url]))
         msg = Message([cover, mstext])
         return msg, vurl
     except Exception as e:
