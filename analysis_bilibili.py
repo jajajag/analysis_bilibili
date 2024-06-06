@@ -203,11 +203,12 @@ async def video_detail(url: str, session: ClientSession, **kwargs):
                 return "解析到视频被删了/稿件不可见或审核中/权限不足", url
         cover = MessageSegment.image(res["pic"])
         #vurl  = f"https://www.bilibili.com/video/av{res['aid']}"
+        # JAG: Add title, up, first 3 lines of description, and video url
         vurl  = f"https://b23.tv/{res['bvid']}"
         title = f"{res['title']}\n"
         up    = f"UP：{res['owner']['name']}\n"
         desc  = res['desc'].split("\n")
-        desc  = "".join(desc[:3]) + "…" if len(desc) > 3 else "".join(desc)
+        desc  = "".join(desc[:3]) + "……" if len(desc) > 3 else "".join(desc)
         desc  = f"简介：{desc}\n"
         mstext = MessageSegment.text("".join([title, up, desc, vurl]))
         msg = Message([cover, mstext])
