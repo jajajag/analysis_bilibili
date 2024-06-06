@@ -207,7 +207,8 @@ async def video_detail(url: str, session: ClientSession, **kwargs):
         vurl  = f"https://b23.tv/av{res['aid']}"
         title = f"{res['title']}\n"
         up    = f"UP：{res['owner']['name']}\n"
-        desc  = res['desc'].split("\n")
+        # Split and remove empty lines in description
+        desc  = [x.strip() for x in res['desc'].split("\n") if x.strip()]
         # Only show first 3 lines of description
         desc  = "\n".join(desc[:3]) + "……" if len(desc) > 3 else "\n".join(desc)
         desc  = f"简介：{desc}\n" if desc else f"简介：-\n"
