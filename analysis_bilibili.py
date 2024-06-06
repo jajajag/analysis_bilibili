@@ -204,7 +204,7 @@ async def video_detail(url: str, session: ClientSession, **kwargs):
         cover = MessageSegment.image(res["pic"])
         #vurl  = f"https://www.bilibili.com/video/av{res['aid']}"
         # JAG: Add title, up, description, and video url
-        vurl  = f"https://b23.tv/{res['bvid']}"
+        vurl  = f"https://b23.tv/av{res['aid']}"
         title = f"{res['title']}\n"
         up    = f"UP：{res['owner']['name']}\n"
         desc  = res['desc'].split("\n")
