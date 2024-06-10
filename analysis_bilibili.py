@@ -272,11 +272,7 @@ async def live_detail(url: str, session: ClientSession):
         uname = res["anchor_info"]["base_info"]["uname"]
         room_id = res["room_info"]["room_id"]
         title = res["room_info"]["title"]
-        cover = (
-            MessageSegment.image(res["room_info"]["cover"])
-            if analysis_display_image or "live" in analysis_display_image_list
-            else MessageSegment.text("")
-        )
+        cover = MessageSegment.image(res["room_info"]["cover"])
         live_status = res["room_info"]["live_status"]
         lock_status = res["room_info"]["lock_status"]
         parent_area_name = res["room_info"]["parent_area_name"]
@@ -290,20 +286,19 @@ async def live_detail(url: str, session: ClientSession):
             lock_time = strftime("%Y-%m-%d %H:%M:%S", localtime(lock_time))
             title = f"[已封禁]直播间封禁至：{lock_time}\n"
         elif live_status == 1:
-            title = f"[直播中]标题：{title}\n"
+            title = f"[直播中]{title}\n"
         elif live_status == 2:
-            title = f"[轮播中]标题：{title}\n"
+            title = f"[轮播中]{title}\n"
         else:
-            title = f"[未开播]标题：{title}\n"
-        up = f"主播：{uname}  当前分区：{parent_area_name}-{area_name}\n"
-        watch = f"观看：{watched_show}  直播时的人气上一次刷新值：{handle_num(online)}\n"
+            title = f"[未开播]{title}\n"
+        up = f"主播：{uname}\n当前分区：{parent_area_name}-{area_name}\n"
         if tags:
             tags = f"标签：{tags}\n"
         if live_status:
             player = f"独立播放器：https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid={room_id}"
         else:
             player = ""
-        mstext = MessageSegment.text("".join([vurl, title, up, watch, tags, player]))
+        mstext = MessageSegment.text("".join([vurl, title, vurl]))
         msg = Message([cover, mstext])
         return msg, vurl
     except Exception as e:
