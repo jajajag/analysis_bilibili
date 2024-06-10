@@ -298,7 +298,7 @@ async def live_detail(url: str, session: ClientSession):
             player = f"独立播放器：https://www.bilibili.com/blackboard/live/live-activity-player.html?enterTheRoom=0&cid={room_id}"
         else:
             player = ""
-        mstext = MessageSegment.text("".join([vurl, title, vurl]))
+        mstext = MessageSegment.text("".join([title, up, vurl]))
         msg = Message([cover, mstext])
         return msg, vurl
     except Exception as e:
