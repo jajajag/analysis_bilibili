@@ -206,7 +206,7 @@ async def video_detail(url: str, session: ClientSession, **kwargs):
         # JAG: Add title, up, description, and video url
         vurl  = f"https://b23.tv/av{res['aid']}"
         title = f"{res['title']}\n"
-        up    = f"UP：{res['owner']['name']}\n"
+        up    = f"up主：{res['owner']['name']}\n"
         # Split and remove empty lines in description
         desc  = [x.strip() for x in res['desc'].split("\n") if x.strip()]
         # Only show first 3 lines of description
