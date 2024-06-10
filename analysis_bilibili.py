@@ -291,7 +291,7 @@ async def live_detail(url: str, session: ClientSession):
             title = f"[轮播中]{title}\n"
         else:
             title = f"[未开播]{title}\n"
-        up = f"主播：{uname}\n当前分区：{parent_area_name}-{area_name}\n"
+        up = f"主播：{uname}\n分区：{parent_area_name}->{area_name}\n"
         if tags:
             tags = f"标签：{tags}\n"
         if live_status:
